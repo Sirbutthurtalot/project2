@@ -22,7 +22,7 @@ class ProductScreen extends ConsumerWidget {
                     Product p = snapshot.data!;
                     return Center(child: LayoutBuilder(builder:
                         (BuildContext context, BoxConstraints constraints) {
-                      if (constraints.maxWidth < 925) {
+                      if (constraints.maxWidth < 957) {
                         return PhoneLayout(p);
                       } else if (constraints.maxWidth < 1200) {
                         return DesktopLayout(p);
@@ -31,7 +31,7 @@ class ProductScreen extends ConsumerWidget {
                       }
                     }));
                   } else {
-                    return Text("Waiting for data");
+                    return const Text("Waiting for data");
                   }
                 }))));
   }
@@ -43,27 +43,29 @@ class PhoneLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Image(height: 500, image: NetworkImage(product.img)),
-      Text(product.name),
-      Text(product.price.toString()),
-      ShoppingCartButton(product)
-    ]);
-  }
-}
-
-class LaptopLayout extends StatelessWidget {
-  final Product product;
-  LaptopLayout(this.product);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Image(height: 500, image: NetworkImage(product.img)),
-      Text(product.name),
-      Text(product.price.toString()),
-      ShoppingCartButton(product)
-    ]);
+    return Container(
+        color: Colors.grey[200],
+        width: 1200,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image(image: NetworkImage(product.img)),
+              Container(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                child: Text(textScaleFactor: 3, product.name),
+              ),
+              Text(product.desc),
+              Container(
+                  padding: EdgeInsets.all(50),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Price: ${product.price.toString()}"),
+                        ShoppingCartButton(product)
+                      ]))
+            ]));
   }
 }
 
@@ -76,17 +78,18 @@ class DesktopLayout extends StatelessWidget {
     return Container(
         color: Colors.grey[200],
         width: 1200,
+        padding: const EdgeInsets.all(16),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Image(height: 500, image: NetworkImage(product.img)),
             Container(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 5),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
               child: Text(textScaleFactor: 3, product.name),
             ),
             Text(product.desc)
           ]),
           Container(
-              padding: EdgeInsets.all(50),
+              padding: const EdgeInsets.all(50),
               child: Column(children: [
                 Text("Price: ${product.price.toString()}"),
                 ShoppingCartButton(product)
