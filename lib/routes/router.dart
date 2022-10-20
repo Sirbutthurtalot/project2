@@ -6,6 +6,7 @@ import '../screens/user_screen.dart';
 import '../screens/product_screen.dart';
 import '../screens/checkout_screen.dart';
 import '../screens/summary_screen.dart';
+import '../screens/search_screen.dart';
 
 final router = GoRouter(routes: [
   GoRoute(path: '/', builder: ((context, state) => HomeScreen())),
@@ -13,6 +14,7 @@ final router = GoRouter(routes: [
   GoRoute(path: '/user', builder: ((context, state) => UserScreen())),
   GoRoute(path: '/checkout', builder: ((context, state) => CheckoutScreen())),
   GoRoute(path: '/summary', builder: ((context, state) => SummaryScreen())),
+  GoRoute(path: '/search', builder: ((context, state) => SearchScreen())),
   GoRoute(
       path: '/product/:id',
       builder: ((context, state) =>

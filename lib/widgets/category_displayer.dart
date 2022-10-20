@@ -9,7 +9,8 @@ import '../widgets/product_displayer_vertical.dart';
 
 class CategoryDisplayer extends ConsumerWidget {
   final String axis;
-  CategoryDisplayer(this.axis);
+  final bool isSearch;
+  CategoryDisplayer(this.axis, [this.isSearch = true]);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,8 +25,8 @@ class CategoryDisplayer extends ConsumerWidget {
             return Column(children: [
               CategorySelector(categories),
               axis == 'horizontal'
-                  ? ProductDisplayerHorizontal(selectedCategory)
-                  : ProductDisplayerVertical(selectedCategory)
+                  ? ProductDisplayerHorizontal(selectedCategory, isSearch)
+                  : ProductDisplayerVertical(selectedCategory, isSearch)
             ]);
           } else {
             print(snapshot);

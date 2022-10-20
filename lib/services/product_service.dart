@@ -16,6 +16,26 @@ class ProductService {
     });
   }
 
+  Future<List<Product>> getSearch(String searchWord) {
+    String tag = searchWord.toLowerCase();
+    return loadData().then((data) {
+      Map decoded = jsonDecode(data);
+      List rawProducts = decoded['shop']['data'];
+      List<Product> products =
+          rawProducts.map((productMap) => Product.fromMap(productMap)).toList();
+      var match = products
+          .where((p) =>
+              p.name.toString().toLowerCase().contains(tag) ||
+              p.tags.any((t) => t.contains(tag)))
+          .toList();
+      if (match.isNotEmpty) {
+        return match;
+      } else {
+        throw ("No products found");
+      }
+    });
+  }
+
   Future<List<Product>> getCategory(String tag) {
     return loadData().then((data) {
       Map decoded = jsonDecode(data);

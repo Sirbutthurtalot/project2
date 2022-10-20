@@ -15,6 +15,8 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
         title: const Text("Cube shop"),
         actions: <Widget>[
           IconButton(
+              onPressed: () => context.go('/search'), icon: Icon(Icons.search)),
+          IconButton(
             icon: Badge(
                 badgeContent: Text(cartSize.toString(),
                     style: TextStyle(color: Colors.white)),

@@ -6,13 +6,16 @@ import '../services/product_service.dart';
 
 class ProductDisplayerHorizontal extends StatelessWidget {
   final String tag;
-  ProductDisplayerHorizontal(this.tag);
+  final bool isSearch;
+  ProductDisplayerHorizontal(this.tag, [this.isSearch = true]);
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Product>> data = tag == ""
-        ? ProductService().getAll()
-        : ProductService().getCategory(tag);
+    Future<List<Product>> data = isSearch
+        ? ProductService().getSearch(tag)
+        : tag == ""
+            ? ProductService().getAll()
+            : ProductService().getCategory(tag);
     return FutureBuilder(
         future: data,
         builder: (context, snapshot) {

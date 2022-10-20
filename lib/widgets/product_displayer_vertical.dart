@@ -6,13 +6,16 @@ import '../widgets/shopping_cart_button.dart';
 
 class ProductDisplayerVertical extends StatelessWidget {
   final String tag;
-  ProductDisplayerVertical(this.tag);
+  final bool isSearch;
+  ProductDisplayerVertical(this.tag, [this.isSearch = false]);
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Product>> data = tag == ""
-        ? ProductService().getAll()
-        : ProductService().getCategory(tag);
+    Future<List<Product>> data = isSearch
+        ? ProductService().getSearch(tag)
+        : tag == ""
+            ? ProductService().getAll()
+            : ProductService().getCategory(tag);
     return FutureBuilder(
         future: data,
         builder: (context, snapshot) {
@@ -72,6 +75,8 @@ class ProductDisplayerVertical extends StatelessWidget {
                                             ]))
                                       ])))));
                     })));
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
           } else {
             return const Text("Waiting for data...");
           }
