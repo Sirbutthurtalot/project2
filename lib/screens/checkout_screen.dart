@@ -62,11 +62,13 @@ class DesktopLayout extends ConsumerWidget {
     return Center(
         child: Container(
             padding: const EdgeInsets.all(16),
-            child: Column(children: [
-              PaymentSelector(),
-              PaymentOption(),
-              CheckoutButton()
-            ])));
+            child: Container(
+                width: 800,
+                child: Column(children: [
+                  PaymentSelector(),
+                  PaymentOption(),
+                  CheckoutButton()
+                ]))));
   }
 }
 
@@ -84,6 +86,7 @@ class CheckoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: EdgeInsets.all(16),
         child: ElevatedButton(
             onPressed: () => context.go('/summary'), child: Text("Checkout")));
   }

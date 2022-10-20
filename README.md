@@ -1,4 +1,6 @@
-Simple webstrore front.
+Simple webstrore front, made during Aalto university course DAD.
+
+
 
 
 # 3 key challenges
