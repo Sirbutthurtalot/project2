@@ -9,16 +9,18 @@ import '../providers/providers.dart';
 class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      if (constraints.maxWidth < 600) {
-        return PhoneLayout();
-      } else if (constraints.maxWidth < 1200) {
-        return LaptopLayout();
-      } else {
-        return DesktopLayout();
-      }
-    });
+    return Scaffold(
+        appBar: TopBar(),
+        body: SingleChildScrollView(child: Center(child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth < 600) {
+            return PhoneLayout();
+          } else if (constraints.maxWidth < 1200) {
+            return LaptopLayout();
+          } else {
+            return DesktopLayout();
+          }
+        }))));
   }
 }
 
@@ -26,16 +28,13 @@ class PhoneLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<Product> products = ref.watch(cartProvider);
-    return Scaffold(
-        appBar: TopBar(),
-        body: Center(
-            child: Container(
-                padding: const EdgeInsets.all(16),
-                child: products.isEmpty
-                    ? const Center(child: Text("Shopping Cart is empty"))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [CartContentDisplayer(), CheckoutBox()]))));
+    return Container(
+        padding: const EdgeInsets.all(16),
+        child: products.isEmpty
+            ? const Center(child: Text("Shopping Cart is empty"))
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [CartContentDisplayer(), CheckoutBox()]));
   }
 }
 
@@ -43,16 +42,13 @@ class LaptopLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<Product> products = ref.watch(cartProvider);
-    return Scaffold(
-        appBar: TopBar(),
-        body: Center(
-            child: Container(
-                padding: const EdgeInsets.all(16),
-                child: products.isEmpty
-                    ? const Center(child: Text("Shopping Cart is empty"))
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [CartContentDisplayer(), CheckoutBox()]))));
+    return Container(
+        padding: const EdgeInsets.all(16),
+        child: products.isEmpty
+            ? const Center(child: Text("Shopping Cart is empty"))
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CartContentDisplayer(), CheckoutBox()]));
   }
 }
 
@@ -60,17 +56,14 @@ class DesktopLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<Product> products = ref.watch(cartProvider);
-    return Scaffold(
-        appBar: TopBar(),
-        body: Center(
-            child: Container(
-                padding: const EdgeInsets.all(16),
-                width: 1200,
-                child: products.isEmpty
-                    ? const Center(child: Text("Shopping Cart is empty"))
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [CartContentDisplayer(), CheckoutBox()]))));
+    return Container(
+        padding: const EdgeInsets.all(16),
+        width: 1200,
+        child: products.isEmpty
+            ? const Center(child: Text("Shopping Cart is empty"))
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CartContentDisplayer(), CheckoutBox()]));
   }
 }
 
@@ -115,7 +108,11 @@ class CheckoutBox extends ConsumerWidget {
               padding: EdgeInsets.all(8),
               child: Text("Total price: ${sum.toString()}")),
           ElevatedButton(
-              onPressed: () => context.go("/checkout"),
+              onPressed: () {
+                ref.watch(summaryProvider.notifier).update((state) => products);
+                ref.watch(cartProvider.notifier).removeAll();
+                context.go("/checkout");
+              },
               child: const Icon(Icons.shopping_cart_checkout))
         ]));
   }

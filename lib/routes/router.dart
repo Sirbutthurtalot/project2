@@ -5,12 +5,14 @@ import '../screens/shopping_cart.dart';
 import '../screens/user_screen.dart';
 import '../screens/product_screen.dart';
 import '../screens/checkout_screen.dart';
+import '../screens/summary_screen.dart';
 
 final router = GoRouter(routes: [
   GoRoute(path: '/', builder: ((context, state) => HomeScreen())),
   GoRoute(path: '/cart', builder: ((context, state) => ShoppingCart())),
   GoRoute(path: '/user', builder: ((context, state) => UserScreen())),
   GoRoute(path: '/checkout', builder: ((context, state) => CheckoutScreen())),
+  GoRoute(path: '/summary', builder: ((context, state) => SummaryScreen())),
   GoRoute(
       path: '/product/:id',
       builder: ((context, state) =>
