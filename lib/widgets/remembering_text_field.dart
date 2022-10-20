@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RememberingTextField extends StatefulWidget {
@@ -36,6 +37,7 @@ class _TextState extends State<RememberingTextField> {
     return TextFormField(
       controller: _controller,
       decoration: InputDecoration(labelText: key),
+      inputFormatters: formatter(key),
     );
   }
 }
@@ -52,4 +54,25 @@ Future<String> getValue(String s) async {
 updateValue(String key, String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(key, value);
+}
+
+List<TextInputFormatter>? formatter(String key) {
+  if (key == 'CVC/CVV') {
+    return [
+      FilteringTextInputFormatter.digitsOnly,
+      LengthLimitingTextInputFormatter(3)
+    ];
+  } else if (key == 'Expiration Date') {
+    return [
+      FilteringTextInputFormatter.digitsOnly,
+      LengthLimitingTextInputFormatter(4)
+    ];
+  } else if (key == 'Credit Card Number') {
+    return [
+      FilteringTextInputFormatter.digitsOnly,
+      LengthLimitingTextInputFormatter(20)
+    ];
+  } else {
+    return null;
+  }
 }
