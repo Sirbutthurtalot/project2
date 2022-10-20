@@ -16,7 +16,7 @@ class CreditCard extends StatelessWidget {
       } else {
         return Column(children: [
           RememberingTextField('Credit Card Number'),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Container(
                 width: 300, child: RememberingTextField('Expiration Date')),
             Container(width: 300, child: RememberingTextField('CVC/CVV'))

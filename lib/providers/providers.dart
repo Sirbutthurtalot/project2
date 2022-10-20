@@ -38,3 +38,5 @@ final cartProvider =
     StateNotifierProvider<CartNotifier, List<Product>>((ref) => CartNotifier());
 
 final categoryProvider = StateProvider<String?>((ref) => null);
+
+final paymentProvider = StateProvider<String?>((ref) => null);
